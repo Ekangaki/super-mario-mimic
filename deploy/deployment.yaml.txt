@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mario-app
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mario
+  template:
+    metadata:
+      labels:
+        app: mario
+    spec:
+      containers:
+      - name: mario-container
+        image: ekangaki/super-mario:latest # <-- This will be updated by sed
+        ports:
+        - containerPort: 8080
