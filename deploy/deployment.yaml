@@ -15,8 +15,9 @@ spec:
     spec:
       containers:
       - name: mario-container
-        image: ekangaki/super-mario:latest # <-- This will be updated by sed
+        image: ekangaki/super-mario-mimic:latest # <-- This will be updated by sed
         ports:
         - containerPort: 8080
+
 
 
