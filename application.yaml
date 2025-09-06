@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: super-mario-mimic
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: ekangaki/super-mario-mimic
+    argocd-image-updater.argoproj.io/ekangaki/super-mario-mimic.update-strategy: semver
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/super-mario-mimic.git-access-token-secret: argocd/git-creds
+spec:
+  project: default
+  source:
+    path: helm-chart/super-mario-mimic
+    repoURL: https://github.com/Ekangaki/super-mario-mimic.git
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
