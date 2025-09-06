@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: ekangaki/super-mario
+  repository: ekangaki/super-mario-mimic
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -11,3 +11,4 @@ service:
   nodePort: 30888   # customize or let k8s auto-assign
 
 resources: {}
+
