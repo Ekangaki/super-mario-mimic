@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mario-app.fullname" . }}
+  labels:
+    app: {{ include "mario-app.name" . }}
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: mario={{ .Values.image.repository }}
+    argocd-image-updater.argoproj.io/mario.update-strategy: latest
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "mario-app.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "mario-app.name" . }}
+    spec:
+      containers:
+        - name: mario
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}

@@ -1,0 +1,13 @@
+replicaCount: 2
+image:
+  repository: ekangaki/super-mario
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8080
+  nodePort: 30888   # customize or let k8s auto-assign
+
+resources: {}
