@@ -1,24 +1,25 @@
+# mario-chart/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mario-app.fullname" . }}
+  # The original template was likely referencing the missing helper.
+  # Correct it by using a direct value from values.yaml or a hardcoded name.
+  name: {{ .Values.nameOverride | default "mario-app" }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ include "mario-app.name" . }}
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: mario={{ .Values.image.repository }}
-    argocd-image-updater.argoproj.io/mario.update-strategy: latest
+    app: mario
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "mario-app.name" . }}
+      app: mario
   template:
     metadata:
       labels:
-        app: {{ include "mario-app.name" . }}
+        app: mario
     spec:
       containers:
-        - name: mario
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          ports:
-            - containerPort: {{ .Values.service.targetPort }}
+      - name: mario-container
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
